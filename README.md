@@ -1,5 +1,6 @@
 # Træfik Setup Localhost
 
+
 ## Requirements
 
 - [Docker](https://docs.docker.com/get-docker/) Docker installed
@@ -78,3 +79,7 @@
 ```bash
  sudo  rm -rf ./data
 ```
+
+***
+
+<img src="./utility/3sem-setup-local.drawio.png" alt="3 semester local environment setup">
