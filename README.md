@@ -18,7 +18,7 @@ https://docs.docker.com/get-docker/
   docker-compose down
 ```
 
-### 4. Access Traefik Dashboard
+### 4. Access Traefik Dashboard through browser
 
 ```bash
   traefik.localhost
