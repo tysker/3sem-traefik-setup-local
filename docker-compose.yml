@@ -1,0 +1,78 @@
+version: '3.9'
+
+services:
+  traefik:
+    image: traefik:v3.0
+    container_name: traefik
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      # Traefik API
+      - TRAEFIK_API=true # enables the Traefik API. True by default
+      - TRAEFIK_API_INSECURE=true # allow access to the Traefik API over an insecure connection (HTTP).
+      - TRAEFIK_API_DASHBOARD=true # enables the Traefik dashboard. True by default.
+      # Logging configuration
+      - TRAEFIK_LOG_LEVEL:DEBUG # sets the log level (DEBUG, INFO, WARN, ERROR, FATAL, PANIC). DEBUG by default
+      # - TRAEFIK_ACCESSLOG_FILTERS_STATUSCODES=400-499,500-599 # filters access logs to only include 400 and 500 level errors
+      # Provider configuration
+      - TRAEFIK_PROVIDERS_DOCKER=true # enables the Docker provider
+      - TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT=false # prevents Traefik from creating routes for containers that don't have a traefik.enable=true label
+      - TRAEFIK_PROVIDERS_DOCKER_WATCH=true # tells Traefik to listen to Docker events
+      # Entrypoints configuration
+      - TRAEFIK_ENTRYPOINTS_WEB_ADDRESS=:80 # sets the port for HTTP
+      - TRAEFIK_ENTRYPOINTS_WEBSECURE_ADDRESS=:443 # sets the port for HTTPS
+    ports:
+      - "80:80"
+      - "443:443"
+    labels:
+      # Traefik configuration
+      traefik.enable: true # enables Traefik for this container
+      # Routers configuration
+      traefik.http.routers.traefik.rule: Host(`traefik.localhost`) # sets the hostname for the Traefik dashboard route
+      traefik.http.routers.traefik.entrypoints: web # sets the entrypoint for the Traefik dashboard route
+      traefik.http.routers.traefik.service: api@internal # ensures that the Traefik dashboard route is linked to the internal Traefik API service
+      # Services configuration
+      traefik.http.services.traefik.loadbalancer.server.port: 8080 # sets the port for the Traefik dashboard service
+
+  sparkapi:
+    image: tyskerdocker/sparkapi:latest
+    container_name: sparkapi
+    restart: unless-stopped
+    networks:
+        - frontend
+        - backend
+    labels:
+      # Traefik configuration
+      traefik.enable: true # enables Traefik for this container
+      # Routers configuration
+      traefik.http.routers.sparkapi.rule: Host(`sparkapi.localhost`) # sets the hostname for the sparkapi route
+      traefik.http.routers.sparkapi.entrypoints: web # sets the entrypoint for the sparkapi route
+      traefik.http.routers.sparkapi.service: sparkapi # ensures that the sparkapi route is linked to the sparkapi service
+      # Services configuration
+      traefik.http.services.sparkapi.loadbalancer.server.port: 7000 # sets the port for the sparkapi service
+
+  db:
+    image: postgres:latest
+    container_name: db
+    restart: unless-stopped
+    networks:
+        - backend
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: firm
+    volumes:
+      - ./data:/var/lib/postgresql/data/
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+networks:
+    frontend:
+        name: frontend
+        driver: bridge
+    backend:
+        name: backend
+        internal: false # in production, it should be true if you don't want to expose this network to the outside world
+        driver: bridge
