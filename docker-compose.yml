@@ -11,17 +11,21 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
+
       # Traefik API
       - TRAEFIK_API=true # enables the Traefik API. True by default
       - TRAEFIK_API_INSECURE=true # allow access to the Traefik API over an insecure connection (HTTP).
       - TRAEFIK_API_DASHBOARD=true # enables the Traefik dashboard. True by default.
+
       # Logging configuration
       - TRAEFIK_LOG_LEVEL:DEBUG # sets the log level (DEBUG, INFO, WARN, ERROR, FATAL, PANIC). DEBUG by default
       # - TRAEFIK_ACCESSLOG_FILTERS_STATUSCODES=400-499,500-599 # filters access logs to only include 400 and 500 level errors
+
       # Provider configuration
       - TRAEFIK_PROVIDERS_DOCKER=true # enables the Docker provider
       - TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT=false # prevents Traefik from creating routes for containers that don't have a traefik.enable=true label
       - TRAEFIK_PROVIDERS_DOCKER_WATCH=true # tells Traefik to listen to Docker events
+
       # Entrypoints configuration
       - TRAEFIK_ENTRYPOINTS_WEB_ADDRESS=:80 # sets the port for HTTP
       - TRAEFIK_ENTRYPOINTS_WEBSECURE_ADDRESS=:443 # sets the port for HTTPS
@@ -29,12 +33,15 @@ services:
       - "80:80"
       - "443:443"
     labels:
+
       # Traefik configuration
       traefik.enable: true # enables Traefik for this container
+
       # Routers configuration
       traefik.http.routers.traefik.rule: Host(`traefik.localhost`) # sets the hostname for the Traefik dashboard route
       traefik.http.routers.traefik.entrypoints: web # sets the entrypoint for the Traefik dashboard route
       traefik.http.routers.traefik.service: api@internal # ensures that the Traefik dashboard route is linked to the internal Traefik API service
+
       # Services configuration
       traefik.http.services.traefik.loadbalancer.server.port: 8080 # sets the port for the Traefik dashboard service
 
@@ -46,12 +53,15 @@ services:
         - frontend
         - backend
     labels:
+
       # Traefik configuration
       traefik.enable: true # enables Traefik for this container
+
       # Routers configuration
       traefik.http.routers.api.rule: Host(`api.localhost`) # sets the hostname for the api route
       traefik.http.routers.api.entrypoints: web # sets the entrypoint for the api route
       traefik.http.routers.api.service: api # ensures that the api route is linked to the api service
+
       # Services configuration
       traefik.http.services.api.loadbalancer.server.port: 7000 # sets the port for the api service
 
@@ -79,12 +89,15 @@ services:
     volumes:
     - ./pgadmin-data:/pgadmin
     labels:
+
       # Traefik configuration
       traefik.enable: true # enables Traefik for this container
+
       # Routers configuration
       traefik.http.routers.pgadmin.rule: Host(`pgadmin.localhost`) # sets the hostname for the pgadmin route
       traefik.http.routers.pgadmin.entrypoints: web # sets the entrypoint for the pgadmin route
       traefik.http.routers.pgadmin.service: pgadmin # ensures that the api route is linked to the pgadmin service
+
       # Services configuration
       traefik.http.services.pgadmin.loadbalancer.server.port: 80 # sets the port for the pgadmin service
     networks:
