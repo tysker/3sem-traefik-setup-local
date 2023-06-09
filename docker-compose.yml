@@ -70,7 +70,7 @@ services:
     ports:
       - "5432:5432"
 
-  pgadmin:
+  pgadmin: # https://turreta.com/blog/2020/07/31/docker-compose-yml-for-pgadmin-and-postgresql/
     image: dpage/pgadmin4:7.3
     container_name: pgadmin
     restart: unless-stopped
