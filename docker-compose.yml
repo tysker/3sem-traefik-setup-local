@@ -5,6 +5,9 @@ services:
     image: traefik:v3.0
     container_name: traefik
     restart: unless-stopped
+    networks:
+        - frontend
+        - backend
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
@@ -35,9 +38,9 @@ services:
       # Services configuration
       traefik.http.services.traefik.loadbalancer.server.port: 8080 # sets the port for the Traefik dashboard service
 
-  sparkapi:
+  api:
     image: tyskerdocker/sparkapi:latest
-    container_name: sparkapi
+    container_name: api
     restart: unless-stopped
     networks:
         - frontend
@@ -46,11 +49,11 @@ services:
       # Traefik configuration
       traefik.enable: true # enables Traefik for this container
       # Routers configuration
-      traefik.http.routers.sparkapi.rule: Host(`sparkapi.localhost`) # sets the hostname for the sparkapi route
-      traefik.http.routers.sparkapi.entrypoints: web # sets the entrypoint for the sparkapi route
-      traefik.http.routers.sparkapi.service: sparkapi # ensures that the sparkapi route is linked to the sparkapi service
+      traefik.http.routers.api.rule: Host(`api.localhost`) # sets the hostname for the api route
+      traefik.http.routers.api.entrypoints: web # sets the entrypoint for the api route
+      traefik.http.routers.api.service: api # ensures that the api route is linked to the api service
       # Services configuration
-      traefik.http.services.sparkapi.loadbalancer.server.port: 7000 # sets the port for the sparkapi service
+      traefik.http.services.api.loadbalancer.server.port: 7000 # sets the port for the api service
 
   db:
     image: postgres:latest
@@ -66,6 +69,31 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4:7.3
+    container_name: pgadmin
+    restart: unless-stopped
+    depends_on:
+      - db
+    volumes:
+    - ./pgadmin-data:/pgadmin
+    ports:
+      - 5050:80
+    labels:
+      # Traefik configuration
+      traefik.enable: true # enables Traefik for this container
+      # Routers configuration
+      traefik.http.routers.pgadmin.rule: Host(`pgadmin.localhost`) # sets the hostname for the pgadmin route
+      traefik.http.routers.pgadmin.entrypoints: web # sets the entrypoint for the pgadmin route
+      traefik.http.routers.pgadmin.service: pgadmin # ensures that the api route is linked to the pgadmin service
+      # Services configuration
+      traefik.http.services.pgadmin.loadbalancer.server.port: 80 # sets the port for the pgadmin service
+    networks:
+        - backend
+    environment:
+      PGADMIN_DEFAULT_EMAIL: <your_email>
+      PGADMIN_DEFAULT_PASSWORD: <your_password>
 
 networks:
     frontend:

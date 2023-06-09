@@ -1,10 +1,32 @@
 # Træfik Setup Localhost
 
+## Requirements
+
+- [Docker](https://docs.docker.com/get-docker/) Docker installed
+
+## Features
+
+- [Traefik](https://traefik.io/) as a reverse proxy
+- [Traefik Dashboard](https://docs.traefik.io/operations/dashboard/) for monitoring
+- [PostgreSQL](https://www.postgresql.org/) for database
+- [pgAdmin](https://www.pgadmin.org/) for database management
+- [Docker](https://www.docker.com/) for containerization
+- [Docker Compose](https://docs.docker.com/compose/) for container orchestration
+
 ## Setup
 
-### 1. Install Docker
+### 1. Fill out the docker-compose.yml file
 
-https://docs.docker.com/get-docker/
+```bash
+    pgadmin:
+    image: dpage/pgadmin4:7.3
+    
+    .....
+    
+    environment:
+      PGADMIN_DEFAULT_EMAIL: <your_email>
+      PGADMIN_DEFAULT_PASSWORD: <your_password>
+```
 
 ### 2. Run Docker
 
@@ -12,17 +34,25 @@ https://docs.docker.com/get-docker/
   docker-compose up -d
 ```
 
-### 3. Stop Docker
-
-```bash
-  docker-compose down
-```
-
-### 4. Access Traefik Dashboard through browser
+### 3. Access Traefik Dashboard through browser
 
 ```bash
   traefik.localhost
 ```
+
+### 4. Access Postgres Dashboard through browser
+
+```bash
+  pgadmin.localhost
+```
+#### 4.1. Login
+- login: <your_email> (see docker-compose.yml)
+- password: <your_password> (see docker-compose.yml)
+
+#### 4.2. Add new server
+- Host name/address: db
+- Port: 5432
+- password: <your_password> (see docker-compose.yml)
 
 ### 5. Access Your Rest Api
 
@@ -30,7 +60,15 @@ https://docs.docker.com/get-docker/
   <your_api_name>.localhost/<your_api_path>
 ```
 
-### 6. Clear DB data installation
+*** 
+
+###  Stop Docker
+
+```bash
+  docker-compose down
+```
+
+### Reset DB data installation
 
 (-v) // remove volumes
 ```bash
