@@ -45,9 +45,9 @@ services:
       # Services configuration
       traefik.http.services.traefik.loadbalancer.server.port: 8080 # sets the port for the Traefik dashboard service
 
-  api:
+  restapi:
     image: tyskerdocker/sparkapi:latest
-    container_name: api
+    container_name: restapi
     restart: unless-stopped
     networks:
         - frontend
@@ -58,15 +58,15 @@ services:
       traefik.enable: true # enables Traefik for this container
 
       # Routers configuration
-      traefik.http.routers.api.rule: Host(`api.localhost`) # sets the hostname for the api route
-      traefik.http.routers.api.entrypoints: web # sets the entrypoint for the api route
-      traefik.http.routers.api.service: api # ensures that the api route is linked to the api service
+      traefik.http.routers.restapi.rule: Host(`restapi.localhost`) # sets the hostname for the api route
+      traefik.http.routers.restapi.entrypoints: web # sets the entrypoint for the api route
+      traefik.http.routers.restapi.service: restapi # ensures that the api route is linked to the api service
 
       # Services configuration
-      traefik.http.services.api.loadbalancer.server.port: 7000 # sets the port for the api service
+      traefik.http.services.restapi.loadbalancer.server.port: 7000 # sets the port for the api service
 
   db:
-    image: postgres:latest
+    image: postgres:16beta1-alpine3.18
     container_name: db
     restart: unless-stopped
     networks:
@@ -100,11 +100,12 @@ services:
 
       # Services configuration
       traefik.http.services.pgadmin.loadbalancer.server.port: 80 # sets the port for the pgadmin service
+
     networks:
         - backend
     environment:
-      PGADMIN_DEFAULT_EMAIL: <your-email>
-      PGADMIN_DEFAULT_PASSWORD: <your-password>
+      PGADMIN_DEFAULT_EMAIL: <your email>
+      PGADMIN_DEFAULT_PASSWORD: <your password>
 
 networks:
     frontend:
