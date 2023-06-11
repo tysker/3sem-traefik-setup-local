@@ -15,6 +15,13 @@
 - [Docker](https://www.docker.com/) for containerization
 - [Docker Compose](https://docs.docker.com/compose/) for container orchestration
 
+## Debugging
+
+- Check if all containers are running with `docker ps -a`
+- Check if all env variables are set in .env file and are correct
+- Check if docker compose has read all environment variables with `docker-compose config`
+- Check the logs of the individual container with `docker logs <container_name>` or `docker logs --follow <container_name>`
+
 ## Setup
 
 ### 1. Complete the docker-compose.yml file
