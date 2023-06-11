@@ -84,3 +84,4 @@
 ***
 
 <img src="./utility/3sem-setup-local.drawio.png" alt="3 semester local environment setup">
+<img src="./utility/3sem-setup-remote.drawio.png" alt="3 semester local environment setup">

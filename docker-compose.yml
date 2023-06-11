@@ -49,7 +49,7 @@ services:
       com.centurylinklabs.watchtower.enable: "false" # disables Watchtower for this container
 
   restapi:
-    image: tyskerdocker/sparkapi:latest
+    image: tyskerdocker/javalinapi:latest
     container_name: restapi
     restart: unless-stopped
     networks:
@@ -66,7 +66,7 @@ services:
       traefik.http.routers.restapi.service: restapi # ensures that the api route is linked to the api service
 
       # Services configuration
-      traefik.http.services.restapi.loadbalancer.server.port: 7000 # sets the port for the api service
+      traefik.http.services.restapi.loadbalancer.server.port: 7070 # sets the port for the api service
 
       # Watchtower configuration
       com.centurylinklabs.watchtower.enable: "true" # enables Watchtower for this container
@@ -132,7 +132,7 @@ services:
       - frontend
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: --interval 30 --cleanup --debug # checks for updates every 30 seconds, cleans up old images, and outputs debug logs
+    command: --interval 60 --cleanup --debug # checks for updates every 60 seconds, cleans up old images, and outputs debug logs
 
 networks:
     frontend:
