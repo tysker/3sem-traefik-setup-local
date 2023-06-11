@@ -119,20 +119,20 @@ services:
       PGADMIN_DEFAULT_EMAIL: <your email>
       PGADMIN_DEFAULT_PASSWORD: <your password>
 
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    environment:
-      REPO_USER: <your dockerhub username>
-      REPO_PASS: <your dockerhub password>
-    labels:
-      com.centurylinklabs.watchtower.enable: "false"
-    networks:
-      - backend
-      - frontend
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    command: --interval 60 --cleanup --debug # checks for updates every 60 seconds, cleans up old images, and outputs debug logs
+#  watchtower:
+#    image: containrrr/watchtower
+#    container_name: watchtower
+#    environment:
+#      REPO_USER: <your dockerhub username>
+#      REPO_PASS: <your dockerhub password>
+#    labels:
+#      com.centurylinklabs.watchtower.enable: "false"
+#    networks:
+#      - backend
+#      - frontend
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    command: --interval 60 --cleanup --debug # checks for updates every 60 seconds, cleans up old images, and outputs debug logs
 
 networks:
     frontend:

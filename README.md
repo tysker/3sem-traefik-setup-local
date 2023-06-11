@@ -29,6 +29,9 @@
       PGADMIN_DEFAULT_EMAIL: <your_email>
       PGADMIN_DEFAULT_PASSWORD: <your_password>
 ```
+#### 1.1. You only do this part if you have your own api image
+    - uncomment the watchtower section
+    - add your dockerhub username and password
 
 ```bash
   watchtower:
