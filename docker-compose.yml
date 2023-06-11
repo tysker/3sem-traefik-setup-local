@@ -45,6 +45,9 @@ services:
       # Services configuration
       traefik.http.services.traefik.loadbalancer.server.port: 8080 # sets the port for the Traefik dashboard service
 
+      # Watchtower configuration
+      com.centurylinklabs.watchtower.enable: "false" # disables Watchtower for this container
+
   restapi:
     image: tyskerdocker/sparkapi:latest
     container_name: restapi
@@ -65,6 +68,9 @@ services:
       # Services configuration
       traefik.http.services.restapi.loadbalancer.server.port: 7000 # sets the port for the api service
 
+      # Watchtower configuration
+      com.centurylinklabs.watchtower.enable: "true" # enables Watchtower for this container
+
   db:
     image: postgres:16beta1-alpine3.18
     container_name: db
@@ -74,6 +80,9 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    labels:
+      # Watchtower configuration
+      com.centurylinklabs.watchtower.enable: "false" # disables Watchtower for this container
     volumes:
       - ./data:/var/lib/postgresql/data/
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -101,11 +110,29 @@ services:
       # Services configuration
       traefik.http.services.pgadmin.loadbalancer.server.port: 80 # sets the port for the pgadmin service
 
+      # Watchtower configuration
+      com.centurylinklabs.watchtower.enable: "false" # disables Watchtower for this container
+
     networks:
         - backend
     environment:
       PGADMIN_DEFAULT_EMAIL: <your email>
       PGADMIN_DEFAULT_PASSWORD: <your password>
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    environment:
+      REPO_USER: <your dockerhub username>
+      REPO_PASS: <your dockerhub password>
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
+    networks:
+      - backend
+      - frontend
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 --cleanup --debug # checks for updates every 30 seconds, cleans up old images, and outputs debug logs
 
 networks:
     frontend:

@@ -4,6 +4,7 @@
 ## Requirements
 
 - [Docker](https://docs.docker.com/get-docker/) Docker installed
+- [DockerHub](https://hub.docker.com/search?q=) DockerHub account
 
 ## Features
 
