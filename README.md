@@ -17,7 +17,7 @@
 
 ## Setup
 
-### 1. Fill out the docker-compose.yml file
+### 1. Complete the docker-compose.yml file
 
 ```bash
     pgadmin:
@@ -28,6 +28,17 @@
     environment:
       PGADMIN_DEFAULT_EMAIL: <your_email>
       PGADMIN_DEFAULT_PASSWORD: <your_password>
+```
+
+```bash
+  watchtower:
+    image: containrrr/watchtower
+
+    .....
+    
+    environment:
+      REPO_USER: <your dockerhub username>
+      REPO_PASS: <your dockerhub password>
 ```
 
 ### 2. Run Docker
