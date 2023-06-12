@@ -1,4 +1,4 @@
-# Træfik Setup Localhost
+# Setup Localhost
 
 
 ## Requirements
