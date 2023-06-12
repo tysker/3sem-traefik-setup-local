@@ -4,12 +4,9 @@
 ## Requirements
 
 - [Docker](https://docs.docker.com/get-docker/) Docker installed
-- [DockerHub](https://hub.docker.com/search?q=) DockerHub account
 
 ## Features
 
-- [Traefik](https://traefik.io/) as a reverse proxy
-- [Traefik Dashboard](https://docs.traefik.io/operations/dashboard/) for monitoring
 - [PostgreSQL](https://www.postgresql.org/) for database
 - [pgAdmin](https://www.pgadmin.org/) for database management
 - [Docker](https://www.docker.com/) for containerization
@@ -36,20 +33,6 @@
       PGADMIN_DEFAULT_EMAIL: <your_email>
       PGADMIN_DEFAULT_PASSWORD: <your_password>
 ```
-#### 1.1. You only do this part if you have your own api image
-    - uncomment the watchtower section
-    - add your dockerhub username and password
-
-```bash
-  watchtower:
-    image: containrrr/watchtower
-
-    .....
-    
-    environment:
-      REPO_USER: <your dockerhub username>
-      REPO_PASS: <your dockerhub password>
-```
 
 ### 2. Run Docker
 
@@ -57,31 +40,19 @@
   docker-compose up -d
 ```
 
-### 3. Access Traefik Dashboard through browser
+### 3. Access Postgres pgadmin dashboard through browser
 
 ```bash
-  traefik.localhost
+  localhost://5050
 ```
-
-### 4. Access Postgres Dashboard through browser
-
-```bash
-  pgadmin.localhost
-```
-#### 4.1. Login
+#### 3.1. Login
 - login: <your_email> (see docker-compose.yml)
 - password: <your_password> (see docker-compose.yml)
 
-#### 4.2. Add new server
+#### 3.2. Add new server
 - Host name/address: db
 - Port: 5432
 - password: <your_password> (see docker-compose.yml)
-
-### 5. Access Your Rest Api
-
-```bash
-  <your_api_name>.localhost/<your_api_path>
-```
 
 *** 
 
@@ -105,4 +76,3 @@
 ***
 
 <img src="./utility/3sem-setup-local.drawio.png" alt="3 semester local environment setup">
-<img src="./utility/3sem-setup-remote.drawio.png" alt="3 semester local environment setup">
