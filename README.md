@@ -46,13 +46,13 @@
   localhost://5050
 ```
 #### 3.1. Login
-- login: <your_email> (see docker-compose.yml)
-- password: <your_password> (see docker-compose.yml)
+- login: **<your_email>** (see docker-compose.yml)
+- password: **<your_password>** (see docker-compose.yml)
 
 #### 3.2. Add new server
-- Host name/address: db
-- Port: 5432
-- password: <your_password> (see docker-compose.yml)
+- Host name/address: **db**
+- Port: **5432**
+- password: **<your_password>** (see docker-compose.yml)
 
 *** 
 
