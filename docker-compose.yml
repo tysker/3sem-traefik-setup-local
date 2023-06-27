@@ -32,8 +32,8 @@ services:
     networks:
         - database_network
     environment:
-      PGADMIN_DEFAULT_EMAIL: joergoertel@proton.me
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: <your_mail_address>
+      PGADMIN_DEFAULT_PASSWORD: <password>
 
 networks:
   database_network:
