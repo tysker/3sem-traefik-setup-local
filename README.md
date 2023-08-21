@@ -25,7 +25,7 @@
 
 ```bash
     pgadmin:
-    image: dpage/pgadmin4:7.3
+    image: dpage/pgadmin4:7.5
     
     .....
     
