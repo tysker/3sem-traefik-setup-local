@@ -43,7 +43,7 @@
 ### 3. Access Postgres pgadmin dashboard through browser
 
 ```bash
-  localhost://5050
+  localhost:5050
 ```
 #### 3.1. Login
 - login: **<your_email>** (see docker-compose.yml)
