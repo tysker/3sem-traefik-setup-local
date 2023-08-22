@@ -52,21 +52,21 @@
 #### 3.2. Add new server
 - Host name/address: **db**
 - Port: **5432**
-- password: **<your_password>** (see docker-compose.yml)
+- password: **<postgres** (in case you haven't changed it in the docker-compose file)
 
 *** 
 
 ###  Stop Docker
 
 ```bash
-  docker-compose down
+  docker compose down
 ```
 
 ### Reset DB data installation
 
 (-v) // remove volumes
 ```bash
- docker-compose down -v 
+ docker compose down -v 
 ```
 
 ```bash

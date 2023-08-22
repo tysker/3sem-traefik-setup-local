@@ -28,8 +28,8 @@ services:
     networks:
         - database_network
     environment:
-      PGADMIN_DEFAULT_EMAIL: <your-email>
-      PGADMIN_DEFAULT_PASSWORD: <your-password>
+      PGADMIN_DEFAULT_EMAIL: joergoertel@proton.me
+      PGADMIN_DEFAULT_PASSWORD: admin
 
 networks:
   database_network:
