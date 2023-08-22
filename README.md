@@ -52,7 +52,7 @@
 #### 3.2. Add new server
 - Host name/address: **db**
 - Port: **5432**
-- password: **<postgres** (in case you haven't changed it in the docker-compose file)
+- password: **<postgres>** (in case you haven't changed it in the docker-compose file)
 
 *** 
 
