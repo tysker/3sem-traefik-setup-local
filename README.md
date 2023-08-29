@@ -5,7 +5,9 @@
 
 - [Docker](https://docs.docker.com/get-docker/) Docker installed
 
-## Features (don't use the links below to install the features. only for documentation)
+## Features 
+
+**(don't use the links below to install the features. only for documentation)**
 
 - [PostgreSQL](https://www.postgresql.org/) for database
 - [pgAdmin](https://www.pgadmin.org/) for database management
