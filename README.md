@@ -36,6 +36,19 @@
       PGADMIN_DEFAULT_PASSWORD: <your_password>
 ```
 
+**If you want you can change the password for the postgres user in the postgres service**
+
+```bash
+    ...
+    image: postgres:15.3-alpine3.18
+    container_name: db
+    restart: unless-stopped
+    networks:
+      - database_network
+    environment:
+      POSTGRES_PASSWORD: <PASSWORD>
+```
+
 ### 2. Run Docker
 
 ```bash
