@@ -7,9 +7,8 @@ services:
     container_name: db
     restart: unless-stopped
     networks:
-        - database_network
+      - database_network
     environment:
-      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
       - ./db-data:/var/lib/postgresql/data/
@@ -26,13 +25,13 @@ services:
     depends_on:
       - db
     networks:
-        - database_network
+      - database_network
     environment:
       PGADMIN_DEFAULT_EMAIL: joergoertel@proton.me
       PGADMIN_DEFAULT_PASSWORD: admin
 
 networks:
   database_network:
-        name: database_network
-        internal: false
-        driver: bridge
+    name: database_network
+    internal: false
+    driver: bridge

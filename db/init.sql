@@ -1,12 +1,22 @@
--- create role
-CREATE ROLE dev WITH LOGIN CREATEDB PASSWORD 'ax2';
+CREATE ROLE dev PASSWORD 'ax2' LOGIN CREATEDB;
+GRANT pg_read_all_data TO dev;
+GRANT pg_write_all_data TO dev;
+SET ROLE dev;
 
 -- create databases
-CREATE DATABASE company_db;
+CREATE DATABASE company;
+CREATE DATABASE projectdb;
+CREATE DATABASE testdb;
 
-\c company_db
+\connect projectdb;
+GRANT ALL PRIVILEGES ON DATABASE projectdb TO dev;
 
--- create tables
+\connect testdb;
+GRANT ALL PRIVILEGES ON DATABASE testdb TO dev;
+
+\connect company;
+GRANT ALL PRIVILEGES ON DATABASE company TO dev;
+
 CREATE TABLE companies
 (
     company_id   SERIAL PRIMARY KEY,
@@ -34,3 +44,4 @@ INSERT INTO contacts(company_id, contact_name, phone, email)
 VALUES (1, 'John Doe', '(408)-111-1234', 'john.doe@bluebird.dev'),
        (1, 'Jane Doe', '(408)-111-1235', 'jane.doe@bluebird.dev'),
        (2, 'David Wright', '(408)-222-1234', 'david.wright@dolphin.dev');
+
